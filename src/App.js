@@ -30,7 +30,7 @@ function App(props) {
     if (currentScore > bestScore) {
       setBestScore(bestScore => bestScore = currentScore)
     }
-  })
+  }, [currentScore, bestScore])
 
   const randomiseArray = function() {
     const shuffled = cardArray.sort(() => Math.random() -0.5)
