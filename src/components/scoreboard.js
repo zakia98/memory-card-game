@@ -3,8 +3,8 @@ import './cssfiles/scoreboard.css'
 function Scoreboard(props) {
     return(
         <div className='scoreboard'>
-            <p>Best Score:</p>
-            <p>Current Score:</p>
+            <p>Best Score: {props.bestScore}</p>
+            <p>Current Score: {props.currentScore}</p>
         </div>
     )
 }

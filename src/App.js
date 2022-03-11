@@ -19,13 +19,17 @@ function App(props) {
     { num:3, image: kingDice2 },
     { num:4, image: mdhrShield },
     { num:5, image: mdhr }, 
-    { num:6, image:mugman }
+    { num:6, image: mugman }
   ])
+  const [currentScore, setCurrentScore] = useState(0)
+  const [bestScore, setBestScore] = useState(0)
 
   const [usedCardArray, setUsedCardArray] = useState([])
 
   useEffect(() => {
-    console.log(usedCardArray)
+    if (currentScore > bestScore) {
+      setBestScore(bestScore => bestScore = currentScore)
+    }
   })
 
   const randomiseArray = function() {
@@ -33,19 +37,44 @@ function App(props) {
     setCardArray([...shuffled])
   }
 
+  const updateScore = function() {
+    setCurrentScore(prevState => prevState + 1)
+
+  }
+
   const chooseCard = function(e) {
-    randomiseArray();
     let num = e.target.getAttribute('num')
     let card = cardArray.filter(item => item.num == num)
     // if card is already in the used card array, trigger game over, else add to used card array
-    setUsedCardArray(usedCardArray => usedCardArray.concat(card[0]))
+    let alreadyClicked = checkIfInUsedCardArray(card[0])
+    if (!alreadyClicked) {
+      setUsedCardArray(usedCardArray => usedCardArray.concat(card[0]))
+      randomiseArray();
+      updateScore()
+    } else {
+      gameOver();
+    }
+  }
+
+  const checkIfInUsedCardArray = function(card) {
+    return usedCardArray.find(element => element.num == card.num)
+  }
+
+  const gameOver = function() {
+    randomiseArray();
+    setUsedCardArray([])
+    setCurrentScore(0)
+    console.log('game over!!!!')
+    document.querySelector('.gameOver').classList.toggle('hidden')
+    setTimeout(() => document.querySelector('.gameOver').classList.toggle('hidden'), 800 )
   }
 
   return (
     <div>
+      <div className='gameOver hidden'> GAME OVER</div>
       <div className='gameInfo'>
         <Instructions/>
-        <Scoreboard/>
+        <Scoreboard currentScore={currentScore} bestScore={bestScore} />
       </div>
       <Game cardArray={cardArray} shuffler={chooseCard}/>
     </div>
