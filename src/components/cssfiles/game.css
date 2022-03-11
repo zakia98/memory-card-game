@@ -5,3 +5,14 @@
     flex-wrap:wrap;
     justify-content: center;
 }
+
+
+@media only screen and (max-width:800px) {
+    .gameArea {
+        flex-direction:column;
+        align-items:center;
+        max-height:80vh;
+        flex:1 0 0
+    }
+ 
+}
