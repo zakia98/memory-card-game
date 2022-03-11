@@ -3,3 +3,13 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
+.gameOver { 
+  background-color: red;
+  padding: 20px;
+  text-align: center;
+}
+
+.hidden {
+  display:none;
+}
